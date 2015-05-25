@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": "../dist",
+		"emitDecoratorMetadata": true,
+		"target": "ES5"
+	}
+}
