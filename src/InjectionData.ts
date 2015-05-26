@@ -1,10 +1,14 @@
 import IInjectionData from "./IInjectionData";
 import IDependency from "./IDependency";
+import IParamInjectionData from "./IParamInjectionData";
 
 class InjectionData<TTarget> implements IInjectionData<TTarget> {
 	isSingleton: boolean = false;
 	
-	constructor(public ctor: TTarget, public dependencies: IDependency[]) {}
+	constructor(
+		public ctor: TTarget, 
+		public dependencies: IDependency[] = [], 
+		public paramData?: IParamInjectionData) {}
 	
 	asSingleton() {
 		this.isSingleton = true;

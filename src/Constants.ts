@@ -3,6 +3,7 @@ module Constants {
 		export const Singleton = 'Singleton';
 		export const Dependency = 'Dependency';
 		export const Dependencies = 'Dependencies';
+		export const InjectParamData = 'InjectParamData';
 	}
 	
 	export module Targets {

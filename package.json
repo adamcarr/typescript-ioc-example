@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^3.9.3",
     "reflect-metadata": "^0.1.0"
   },
   "devDependencies": {

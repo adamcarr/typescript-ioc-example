@@ -3,6 +3,7 @@
 import "reflect-metadata";
 import Constants from './Constants';
 import IDependency from './IDependency';
+import IParamInjectionData from './IParamInjectionData';
 
 module Decorators {
 	export module DI {
@@ -17,6 +18,29 @@ module Decorators {
 				Reflect.defineMetadata(Constants.DIMetaData.Dependencies, dependencies, target);
 				return target;
 			}
+		}
+		
+		export function InjectParam(targetName: string) : ParameterDecorator {
+			return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
+				// we need to build a map of injectable parameters.
+				// this means we need to see if metadata already exists and append on to it
+				
+				var paramInjectionData: IParamInjectionData;
+				if (Reflect.hasMetadata(Constants.DIMetaData.InjectParamData, target)) {
+					paramInjectionData = Reflect.getMetadata(Constants.DIMetaData.InjectParamData, target);
+				} else {
+					paramInjectionData = {
+						params: []
+					}
+				}
+				
+				paramInjectionData.params.push({
+					name: targetName,
+					index: parameterIndex
+				});
+				
+				Reflect.defineMetadata(Constants.DIMetaData.InjectParamData, paramInjectionData, target);
+			};
 		}
 	}
 }
