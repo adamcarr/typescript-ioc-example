@@ -11,7 +11,7 @@ Bootstrapper.bootstrap(container);
 var runs = 5, run = 1;
 
 function createConsumer() {
-	var consumer = container.create<IConsumer>(Constants.Targets.Consumer);
+	var consumer = container.get<IConsumer>(Constants.Targets.Consumer);
 	console.log(consumer);
 	if (run++ < runs) {
 		setTimeout(createConsumer, 1000);

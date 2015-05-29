@@ -28,7 +28,12 @@ class Container {
 		return injectionObj;
 	}
 	
-	create<TTarget>(name: string): TTarget {
+	registerInstance<TTarget extends Object>(name: string, target: TTarget): void {
+		this.injectionManifest[name] = InjectionData.instance(target);
+		this.injectionManifest[name].isSingleton = true;
+	}
+	
+	get<TTarget>(name: string): TTarget {
 		var data = this.getInjectionData(name);
 		var isNew = (data.instance === undefined);
 		var result = this.getInst<TTarget>(name);
@@ -80,17 +85,17 @@ class Container {
 		var data = this.getInjectionData<TTarget>(name);
 		var params = this.getParameters<TTarget>(name);
 		
+		if (data.instance) {
+			return data.instance;
+		}
+		
 		var Temp = function(){};
 		Temp.prototype = (<any>data.ctor).prototype;
 		var inst = new Temp;
 		var ret;
 		
 		if (data.isSingleton) {
-			if (!data.instance) {
-				ret = data.instance = (<any>data).ctor.apply(inst, params);
-			} else {
-				return data.instance;
-			}
+			ret = data.instance = (<any>data).ctor.apply(inst, params);
 		} else {
 			ret = (<any>data).ctor.apply(inst, params);
 		}

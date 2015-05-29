@@ -4,6 +4,7 @@ import IParamInjectionData from "./IParamInjectionData";
 
 class InjectionData<TTarget> implements IInjectionData<TTarget> {
 	isSingleton: boolean = false;
+	instance: TTarget;
 	
 	constructor(
 		public ctor: TTarget, 
@@ -18,6 +19,13 @@ class InjectionData<TTarget> implements IInjectionData<TTarget> {
 	asTransient() {
 		this.isSingleton = false;
 		return this;
+	}
+	
+	static instance<TTarget>(instance: TTarget): InjectionData<TTarget> {
+		var inst = new InjectionData(undefined, undefined, undefined);
+		inst.instance = instance;
+		
+		return inst;
 	}
 }
 

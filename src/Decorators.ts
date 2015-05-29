@@ -13,7 +13,7 @@ module Decorators {
 			};
 		}
 		
-		export function Inject(dependencies: IDependency[]): ClassDecorator {
+		export function InjectProperties(dependencies: IDependency[]): ClassDecorator {
 			return function (target: any) {
 				Reflect.defineMetadata(Constants.DIMetaData.Dependencies, dependencies, target);
 				return target;
@@ -22,9 +22,6 @@ module Decorators {
 		
 		export function InjectParam(targetName: string) : ParameterDecorator {
 			return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
-				// we need to build a map of injectable parameters.
-				// this means we need to see if metadata already exists and append on to it
-				
 				var paramInjectionData: IParamInjectionData;
 				if (Reflect.hasMetadata(Constants.DIMetaData.InjectParamData, target)) {
 					paramInjectionData = Reflect.getMetadata(Constants.DIMetaData.InjectParamData, target);
